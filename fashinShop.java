@@ -55,7 +55,7 @@ class fashinShop{
 			case 1 : placeOrder(); break;
 			case 2 : searchCustomer(); break;
 			case 3 : searchOrder(); break;
-			//case 4 : viewReport(); break;
+			case 4 : viewReport(); break;
 			//case 5 : setOrderStatus(); break;
 			case 6 : deleteOrder(); break;
 			default : 
@@ -243,49 +243,105 @@ class fashinShop{
 		System.out.print("\n\n    Enter Customer Phone Number : ");
 		String contact = input.next();
 		
-		int index = searchCustomerByP_number(contact);
+		int [] index = searchCustomerByP_number(contact);
 		
-		if(index==-1){
-			System.out.println("\n\n\t\t\tCustomer Not Found..!");
-		}else{
-			showCustomerDetails(index);
-		}
-		System.out.print("\n\nDo you want to search another customer ? (Y/N) : ");
-		String option = input.next().toLowerCase();
+			if(index.length == 0){
+				System.out.println("\n\n\t\t\tCustomer Not Found..!");
+			}else{
+				showCustomerDetails(index);
+			}
+			System.out.print("\n\nDo you want to search another customer ? (Y/N) : ");
+			String option = input.next().toLowerCase();
+			
+			if(option.equals("y")){
+				searchCustomer();
+			}else if(option.equals("n")){
+				System.out.println("\n\n\t\t\tRedirecting To Home Page... ");
+				sleep(3000);
+				homePage();
+			}else{
+				System.out.println("\n\n\t\t\tInvalid Input...! Redirecting To Home Page... ");
+				sleep(3000);
+				homePage();
+			}
 		
-		if(option.equals("y")){
-			searchCustomer();
-		}else if(option.equals("n")){
-			System.out.println("\n\n\t\t\tRedirecting To Home Page... ");
-			sleep(3000);
-			homePage();
-		}else{
-			System.out.println("\n\n\t\t\tInvalid Input...! Redirecting To Home Page... ");
-			sleep(3000);
-			homePage();
-		}
+		
 	}
 	
-	public static int searchCustomerByP_number(String contact){
-		for(int i = 0; i<customerPhoneNumber.length; i++){
+	public static int[] searchCustomerByP_number(String contact){
+		int count =0;
+
+		for(int i =0; i<customerPhoneNumber.length; i++){
 			if(customerPhoneNumber[i].equals(contact)){
-				return i;
+				count++;
 			}
 		}
-		return -1;
+
+		int [] searchResultArray = new int [count];
+		if(count==0) return searchResultArray;
+		int index =0;
+
+		for(int i =0; i<customerPhoneNumber.length; i++){
+			if(customerPhoneNumber[i].equals(contact)){
+				searchResultArray[index] = i;
+				index++;
+			}
+		}
+	return searchResultArray;
+		
 	}
 	///-------------------------><---------------------------------------
 
 
 	
 	///---------------->Show Customer Details<---------------------------
-	public static void showCustomerDetails(int index){
+	public static void showCustomerDetails(int [] index){
+		double total =0;
+		int [] tempQytArray = new int[index.length];
+		String [] tempSizeArray = new String[index.length];
+		double [] tempAmountArray = new double[index.length];
+
+		for(int i=0; i<index.length; i++){
+			tempQytArray[i] = qyt[index[i]];
+			tempSizeArray[i] = tSize[index[i]];
+			tempAmountArray[i] = amount[index[i]];
+		}
+		
+		for(int i=0; i<index.length; i++){
+			for(int j=0; j<index.length-1; j++){
+				if(tempAmountArray[j]<tempAmountArray[j+1]){
+					
+					double tempA = tempAmountArray[j];
+					tempAmountArray[j] = tempAmountArray[j+1];
+					tempAmountArray[j+1] = tempA; 
+
+					String tempS = tempSizeArray[j];
+					tempSizeArray[j] = tempSizeArray[j+1];
+					tempSizeArray[j+1] = tempS;
+
+					int tempQ = tempQytArray[j];
+					tempQytArray[j] = tempQytArray[j+1];
+					tempQytArray[j+1] = tempQ; 
+				}
+			}
+		}
+
+		//System.out.println(Arrays.toString(tempAmountArray));
+		//System.out.println(Arrays.toString(tempSizeArray));
+		//System.out.println(Arrays.toString(tempQytArray));
+		
 		System.out.print("\n\n\t\t\t\t+--------+-------+------------+");
 		System.out.print("\n\t\t\t\t|  Size  |  Qyt  |   Amount   |");
+
+		for(int i = 0; i<index.length; i++){
+			System.out.print("\n\t\t\t\t+--------+-------+------------+");
+			//System.out.printf("\n\t\t\t\t|"+"%-8s|%-7d|%,12.2f|",tSize[index[i]],qyt[index[i]],amount[index[i]]);
+			System.out.printf("\n\t\t\t\t|"+"%-8s|%-7d|%,12.2f|",tempSizeArray[i],tempQytArray[i],tempAmountArray[i]);
+			total += tempAmountArray[i];
+		}
+		
 		System.out.print("\n\t\t\t\t+--------+-------+------------+");
-		System.out.printf("\n\t\t\t\t|"+"%-8s|%-7d|%,12.2f|",tSize[index],qyt[index],amount[index]);
-		System.out.print("\n\t\t\t\t+--------+-------+------------+");
-		System.out.printf("\n\t\t\t\t|"+"%-16s|%,12.2f|","  Total Amount",amount[index]);
+		System.out.printf("\n\t\t\t\t|"+"%-16s|%,12.2f|","  Total Amount",total);
 		System.out.print("\n\t\t\t\t+--------+-------+------------+");
 		
 	}
@@ -461,4 +517,14 @@ class fashinShop{
 			customerPhoneNumber = tempCustomerPhoneNumberArray;
 	}
 	///-------------------------><---------------------------------------
+
+
+	///---------------->Customer Reports<--------------------------------
+
+	public static void viewReport(){
+		clearConsole();
+		System.out.print("     _____                 _                                         _____                                  _         \r\n    / ____|               | |                                       |  __ \\                                | |        \r\n   | |       _   _   ___  | |_    ___    _ __ ___     ___   _ __    | |__) |   ___   _ __     ___    _ __  | |_   ___ \r\n   | |      | | | | / __| | __|  / _ \\  | \'_ ` _ \\   / _ \\ | \'__|   |  _  /   / _ \\ | \'_ \\   / _ \\  | \'__| | __| / __|\r\n   | |____  | |_| | \\__ \\ | |_  | (_) | | | | | | | |  __/ | |      | | \\ \\  |  __/ | |_) | | (_) | | |    | |_  \\__ \\\r\n    \\_____|  \\__,_| |___/  \\__|  \\___/  |_| |_| |_|  \\___| |_|      |_|  \\_\\  \\___| | .__/   \\___/  |_|     \\__| |___/\r\n                                                                                    | |                               \r\n                                                                                    |_|                               ");
+
+
+	}
 }
