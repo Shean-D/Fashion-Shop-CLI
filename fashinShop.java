@@ -300,11 +300,29 @@ class fashinShop{
 		int [] tempQytArray = new int[index.length];
 		String [] tempSizeArray = new String[index.length];
 		double [] tempAmountArray = new double[index.length];
+		int totalCount = 0;
 
 		for(int i=0; i<index.length; i++){
-			tempQytArray[i] = qyt[index[i]];
-			tempSizeArray[i] = tSize[index[i]];
-			tempAmountArray[i] = amount[index[i]];
+			int tempQyt = qyt[index[i]];
+			String tempSize = tSize[index[i]];
+			double tempAmount = amount[index[i]];
+
+			boolean found = false;
+			for(int j=0; j<totalCount; j++){
+				if(tempSizeArray[j].equals(tempSize)){
+					tempQytArray[j] += tempQyt;
+					tempAmountArray[j] += tempAmount;
+					found = true;
+					break;
+				}
+			}
+
+			if(!found){
+				tempSizeArray[totalCount] = tempSize;
+				tempQytArray[totalCount] = tempQyt;
+				tempAmountArray[totalCount] = tempAmount;
+				totalCount++;
+			}
 		}
 		
 		for(int i=0; i<index.length; i++){
@@ -333,7 +351,7 @@ class fashinShop{
 		System.out.print("\n\n\t\t\t\t+--------+-------+------------+");
 		System.out.print("\n\t\t\t\t|  Size  |  Qyt  |   Amount   |");
 
-		for(int i = 0; i<index.length; i++){
+		for(int i = 0; i<totalCount; i++){
 			System.out.print("\n\t\t\t\t+--------+-------+------------+");
 			//System.out.printf("\n\t\t\t\t|"+"%-8s|%-7d|%,12.2f|",tSize[index[i]],qyt[index[i]],amount[index[i]]);
 			System.out.printf("\n\t\t\t\t|"+"%-8s|%-7d|%,12.2f|",tempSizeArray[i],tempQytArray[i],tempAmountArray[i]);
