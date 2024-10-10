@@ -631,7 +631,86 @@ class fashinShop {
 
 	/// --------------------->Best In Customers<--------------------------
 	public static void bestInCustomers(){
+		clearConsole();
+		System.out.println("	____                 _       _____              _____                 _                                           \r\n   |  _ \\               | |     |_   _|            / ____|               | |                                          \r\n   | |_) |   ___   ___  | |_      | |    _ __     | |       _   _   ___  | |_    ___    _ __ ___     ___   _ __   ___ \r\n   |  _ <   / _ \\ / __| | __|     | |   | \'_ \\    | |      | | | | / __| | __|  / _ \\  | \'_ ` _ \\   / _ \\ | \'__| / __|\r\n   | |_) | |  __/ \\__ \\ | |_     _| |_  | | | |   | |____  | |_| | \\__ \\ | |_  | (_) | | | | | | | |  __/ | |    \\__ \\\r\n   |____/   \\___| |___/  \\__|   |_____| |_| |_|    \\_____|  \\__,_| |___/  \\__|  \\___/  |_| |_| |_|  \\___| |_|    |___/\r\n                                                                                                                      \r\n                                                                                                                      ");
+		System.out.println("___________________________________________________________________________________________________________________________");
 		
+		String [] CusIdArray = new String[customerPhoneNumber.length];
+		int [] totalQytArray = new int[customerPhoneNumber.length];
+		double [] totalAmountArray = new double[customerPhoneNumber.length];
+		int count = 0;
+
+		for(int i=0; i<customerPhoneNumber.length; i++){
+			String customer = customerPhoneNumber[i];
+			int totalQyt = 0;
+			double totalAmount = 0;
+
+			boolean found = false;
+			for(int j=0; j<count; j++){
+				if(CusIdArray[j].equals(customer)){
+					found = true;
+					break;
+				}
+			}
+
+			if(!found){
+				for(int k=0; k<customerPhoneNumber.length; k++){
+					if(customerPhoneNumber[k].equals(customer)){
+						totalQyt += qyt[k];
+						totalAmount += amount[k];
+
+					}
+				}
+
+				CusIdArray[count] = customer;
+				totalQytArray[count] = totalQyt;
+				totalAmountArray[count] = totalAmount;
+				count++;
+			}
+		}
+
+		for(int i=0; i<count; i++){
+			for(int j=0; j<count-1; j++){
+				if(totalAmountArray[j]< totalAmountArray[j+1]){
+					
+					double tempAmount = totalAmountArray[j];
+					totalAmountArray[j] = totalAmountArray[j+1];
+					totalAmountArray[j+1] = tempAmount;
+
+					int tempQyt = totalQytArray[j];
+					totalQytArray[j] = totalQytArray[j+1];
+					totalQytArray[j+1] = tempQyt;
+
+					String tempCusID = CusIdArray[j];
+					CusIdArray[j] = CusIdArray[j+1];
+					CusIdArray[j+1] = tempCusID;
+				}
+			}
+		}
+
+		System.out.print("\n\n\t\t\t\t+-----------------+-------+--------------+");
+		System.out.print("\n\t\t\t\t| Customer Number |  Qyt  | Total Amount |");
+
+		for (int i = 0; i <count; i++) {
+			System.out.print("\n\t\t\t\t+-----------------+-------+--------------+");
+			System.out.printf("\n\t\t\t\t|" + "%-17s|%-7d|%,14.2f|", CusIdArray[i], totalQytArray[i], totalAmountArray[i]);
+		}
+
+		System.out.print("\n\t\t\t\t+-----------------+-------+--------------+");
+
+		System.out.print("\n\n\tTo access the Main Menu, please enter 0 : ");
+		int option = input.nextInt();
+
+		switch (option) {
+			case 0:
+				System.out.println("\n\n\t\t\tRedirecting to the Home Page...");
+				sleep(2000);
+				homePage();
+				break;
+		
+			default: bestInCustomers();
+				break;
+		}
 	}
 
 }
