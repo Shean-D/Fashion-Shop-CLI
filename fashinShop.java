@@ -602,8 +602,8 @@ class fashinShop {
 				break;
 			case 2: viewCustomers();
 				break;
-			//case 3: allCustomerReport();
-			//	break;
+			case 3: allCustomerReport();
+				break;
 
 			default:
 				System.out.println("\n\n\t\t\tInvalid Input...!");
@@ -780,4 +780,76 @@ class fashinShop {
 	}
 	/// -------------------------><---------------------------------------
 
+	/// ------------------->All Customer Report<--------------------------
+	public static void allCustomerReport(){
+		String [] custIDArray = new String[customerPhoneNumber.length];
+		int [][] qytArray = new int [customerPhoneNumber.length][6];		//xs --> xxl
+		double [] totalAmount = new double[customerPhoneNumber.length];
+		int count =0;
+
+		for(int i=0; i<customerPhoneNumber.length; i++){
+			String customer = customerPhoneNumber[i];
+			boolean found = false;
+
+			for(int j=0; j<count; j++){				//check already in process
+				if(custIDArray[j].equals(customer)){
+					found = true;
+					break;
+				}
+			}
+
+			if(!found){					//if already not in process add new 1
+				custIDArray[count] = customer;
+
+				for(int k=0; k<customerPhoneNumber.length; k++){
+					if(customerPhoneNumber[k].equals(customer)){
+						switch (tSize[k]) {							//to filter which customer select
+							case "xs":
+								qytArray[count][0] += qyt[k];
+								break;
+							case "s" :
+								qytArray[count][1] += qyt[k];
+								break;
+							case "m" : 
+								qytArray[count][2] += qyt[k];
+								break;
+							case "l" :
+								qytArray[count][3] += qyt[k];
+								break;
+							case "xl" :
+								qytArray[count][4] += qyt[k];
+								break;
+							case "xxl" :
+								qytArray[count][5] += qyt[k];
+								break;
+						}
+						totalAmount[count] += amount[k];
+					}
+				}
+				count++;
+			}
+		}
+
+		System.out.println("\n\n\t\t+--------------------+----+----+----+----+----+----+----------+");
+		System.out.printf("\t\t"+"|%-20s|%-4s|%-4s|%-4s|%-4s|%-4s|%-4s|%-10s|","  Phone number"," XS"," S"," M"," L"," XL"," XXL","  Total");
+		//System.out.println("\t\t|    Phone Number    | XS | S | M | L | XL |XXL  |   Total   | ");
+		System.out.print("\n\t\t+--------------------+----+----+----+----+----+----+----------+");
+
+		for(int i=0; i<count; i++){
+			System.out.printf("\n\t\t"+"|%-20s|%-4d|%-4d|%-4d|%-4d|%-4d|%-4d|%-10.2f|",custIDArray[i],qytArray[i][0],qytArray[i][1],qytArray[i][2],qytArray[i][3],qytArray[i][4],qytArray[i][5],totalAmount[i]);	
+		}
+		System.out.println("\n\t\t+--------------------+----+----+----+----+----+----+----------+");
+
+		System.out.println("\n\nTo access the Main Menu, please enter 0 : ");
+		int option = input.nextInt();
+
+		if(option==0){
+			System.out.println("\n\t\t Redirecting to the Home Page...");
+			sleep(2000);
+			homePage();
+		}else{
+			allCustomerReport();
+		}
+	}
+	/// -------------------------><---------------------------------------
 }
