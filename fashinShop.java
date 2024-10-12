@@ -90,7 +90,7 @@ class fashinShop {
 		String Id = generatedOrderId();
 
 		System.out.println("\n\n\n    Enter Order ID : " + Id);
-		validatePhoneNumber();
+		
 		String phoneNumber = validatePhoneNumber();
 
 		System.out.print("\n    Enter T-Shirt Size (XS/S/M/L/XL/XXL) : ");
