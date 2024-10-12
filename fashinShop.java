@@ -854,7 +854,7 @@ class fashinShop {
 	}
 	/// -------------------------><---------------------------------------
 
-	/// ------------------------->Item Report<----------------------------
+	/// ------------------------->Item Reports<---------------------------
 	public static void itemReports(){
 		clearConsole();
 		System.out.println("    _____   _                          _____                                  _         \r\n   |_   _| | |                        |  __ \\                                | |        \r\n     | |   | |_    ___   _ __ ___     | |__) |   ___   _ __     ___    _ __  | |_   ___ \r\n     | |   | __|  / _ \\ | \'_ ` _ \\    |  _  /   / _ \\ | \'_ \\   / _ \\  | \'__| | __| / __|\r\n    _| |_  | |_  |  __/ | | | | | |   | | \\ \\  |  __/ | |_) | | (_) | | |    | |_  \\__ \\\r\n   |_____|  \\__|  \\___| |_| |_| |_|   |_|  \\_\\  \\___| | .__/   \\___/  |_|     \\__| |___/\r\n                                                      | |                               \r\n                                                      |_|                               ");
@@ -865,8 +865,8 @@ class fashinShop {
 		int option = input.nextInt();
 
 		switch (option) {
-			//case 1: bestSellingCatSortedByQyt();
-			//	break;
+			case 1: bestSellingCatSortedByQyt();
+				break;
 			//case 2: bestSellingCatSortedByAmount();
 			//	break;
 			default:
@@ -885,7 +885,84 @@ class fashinShop {
 					sleep(2000);
 					viewReport();
 				}
-				break;
+			break;
 		}
+	}
+	/// -------------------------><---------------------------------------
+
+	/// ---------------->Best selling sorted by QYT<----------------------
+	public static void bestSellingCatSortedByQyt(){
+		clearConsole();
+		System.out.println("     _____                  _                _     ____               ____   __     __  _______ \r\n    / ____|                | |              | |   |  _ \\             / __ \\  \\ \\   / / |__   __|\r\n   | (___     ___    _ __  | |_    ___    __| |   | |_) |  _   _    | |  | |  \\ \\_/ /     | |   \r\n    \\___ \\   / _ \\  | \'__| | __|  / _ \\  / _` |   |  _ <  | | | |   | |  | |   \\   /      | |   \r\n    ____) | | (_) | | |    | |_  |  __/ | (_| |   | |_) | | |_| |   | |__| |    | |       | |   \r\n   |_____/   \\___/  |_|     \\__|  \\___|  \\__,_|   |____/   \\__, |    \\___\\_\\    |_|       |_|   \r\n                                                            __/ |                               \r\n                                                           |___/                                ");
+		System.out.println("____________________________________________________________________________________");
+
+		String [] tempSizes = new String[tSize.length];
+		int [] tempQyt = new int[tSize.length];
+		double [] totalAmount = new double[tSize.length];
+		int count = 0;
+
+		for(int i=0; i<tSize.length; i++){
+			String size = tSize[i];
+			boolean found = false;
+
+			for(int j=0; j<count; j++){
+				if(size.equals(tempSizes[j])){
+					found = true;
+					break;
+				}
+			}
+
+			if(!found){
+				tempSizes[count] = size;
+
+				for(int k=0; k<tSize.length; k++){
+					if(size.equals(tSize[k])){
+					tempQyt[count] += qyt[k];		
+					totalAmount[count] += amount[k];
+					}
+				}
+				count++;
+			}
+		}
+
+		for(int i=0; i<count; i++){
+			for(int j=0; j<count-1; j++){
+				if(tempQyt[j]<tempQyt[j+1]){
+
+					int tQyt = tempQyt[j];
+					tempQyt[j] = tempQyt[j+1];
+					tempQyt[j+1] = tQyt;
+
+					String temSize = tempSizes[j];
+					tempSizes[j] = tempSizes[j+1];
+					tempSizes[j+1] = temSize;
+					
+					double tempTotal = totalAmount[j];
+					totalAmount[j] = totalAmount[j+1];
+					totalAmount[j+1] = tempTotal;
+				}
+			}
+		}
+
+		System.out.println("\n\n\t\t+------+------+----------------+");
+		System.out.printf("\t\t"+"|%-6s|%-6s|%-16s|"," Size","  QYT","   Total Amount");
+		System.out.print("\n\t\t+------+------+----------------+");
+
+		for(int i=0; i<count; i++){
+			System.out.printf("\n\t\t"+"|%-6s|%-6d|%16.2f|",tempSizes[i].toUpperCase(),tempQyt[i],totalAmount[i]);
+			System.out.print("\n\t\t+------+------+----------------+");
+			
+		}
+		System.out.print("\n\n\tTo access the Main Menu, please enter 0 : ");
+		int option = input.nextInt();
+
+		if(option==0){
+			System.out.println("\n\n\t\t\tRedirecting to Home Page...");
+			sleep(2000);
+			homePage();
+		}else{
+			bestSellingCatSortedByQyt();
+		}
+		
 	}
 }
