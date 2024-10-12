@@ -556,8 +556,8 @@ class fashinShop {
 			case 1:
 				customerReports();
 				break;
-			// case 2 : itemReports();
-			// break;
+			case 2 : itemReports();
+				 break;
 			// case 3 : ordersReports();
 			// break;
 			default:
@@ -587,11 +587,8 @@ class fashinShop {
 	/// --------------------->Customer Reports Page<----------------------
 	public static void customerReports() {
 		clearConsole();
-
-		System.out.println(
-				"     _____                 _                                         _____                                  _         \r\n    / ____|               | |                                       |  __ \\                                | |        \r\n   | |       _   _   ___  | |_    ___    _ __ ___     ___   _ __    | |__) |   ___   _ __     ___    _ __  | |_   ___ \r\n   | |      | | | | / __| | __|  / _ \\  | \'_ ` _ \\   / _ \\ | \'__|   |  _  /   / _ \\ | \'_ \\   / _ \\  | \'__| | __| / __|\r\n   | |____  | |_| | \\__ \\ | |_  | (_) | | | | | | | |  __/ | |      | | \\ \\  |  __/ | |_) | | (_) | | |    | |_  \\__ \\\r\n    \\_____|  \\__,_| |___/  \\__|  \\___/  |_| |_| |_|  \\___| |_|      |_|  \\_\\  \\___| | .__/   \\___/  |_|     \\__| |___/\r\n                                                                                    | |                               \r\n                                                                                    |_|                               ");
-		System.out.println(
-				"_______________________________________________________________________________________________________________________");
+		System.out.println("     _____                 _                                         _____                                  _         \r\n    / ____|               | |                                       |  __ \\                                | |        \r\n   | |       _   _   ___  | |_    ___    _ __ ___     ___   _ __    | |__) |   ___   _ __     ___    _ __  | |_   ___ \r\n   | |      | | | | / __| | __|  / _ \\  | \'_ ` _ \\   / _ \\ | \'__|   |  _  /   / _ \\ | \'_ \\   / _ \\  | \'__| | __| / __|\r\n   | |____  | |_| | \\__ \\ | |_  | (_) | | | | | | | |  __/ | |      | | \\ \\  |  __/ | |_) | | (_) | | |    | |_  \\__ \\\r\n    \\_____|  \\__,_| |___/  \\__|  \\___/  |_| |_| |_|  \\___| |_|      |_|  \\_\\  \\___| | .__/   \\___/  |_|     \\__| |___/\r\n                                                                                    | |                               \r\n                                                                                    |_|                               ");
+		System.out.println("_______________________________________________________________________________________________________________________");
 		System.out.println("\n\n\n\t\t[1] Best in Customers\n\n\t\t[2] View Customers\n\n\t\t[3] All Customer Report");
 
 		System.out.print("\n\n\tEnter option : ");
@@ -615,14 +612,14 @@ class fashinShop {
 					customerReports();
 
 				} else if (ynOption.equals("n")) {
-					System.out.println("\n\n\t\tRedirecting to the Home Page...");
+					System.out.println("\n\n\t\tRedirecting to the Report Page...");
 					sleep(2000);
-					homePage();
+					viewReport();
 
 				} else {
-					System.out.println("\n\n\t\tInvalid Input..! Redirecting to the Home Page...");
+					System.out.println("\n\n\t\tInvalid Input..! Redirecting to the Report Page...");
 					sleep(2000);
-					homePage();
+					viewReport();
 				}
 				break;
 		}
@@ -857,5 +854,38 @@ class fashinShop {
 	}
 	/// -------------------------><---------------------------------------
 
-	/// ------------------->All Customer Report<--------------------------
+	/// ------------------------->Item Report<----------------------------
+	public static void itemReports(){
+		clearConsole();
+		System.out.println("    _____   _                          _____                                  _         \r\n   |_   _| | |                        |  __ \\                                | |        \r\n     | |   | |_    ___   _ __ ___     | |__) |   ___   _ __     ___    _ __  | |_   ___ \r\n     | |   | __|  / _ \\ | \'_ ` _ \\    |  _  /   / _ \\ | \'_ \\   / _ \\  | \'__| | __| / __|\r\n    _| |_  | |_  |  __/ | | | | | |   | | \\ \\  |  __/ | |_) | | (_) | | |    | |_  \\__ \\\r\n   |_____|  \\__|  \\___| |_| |_| |_|   |_|  \\_\\  \\___| | .__/   \\___/  |_|     \\__| |___/\r\n                                                      | |                               \r\n                                                      |_|                               ");
+		System.out.println("____________________________________________________________________________________________");
+
+		System.out.println("\n\n\t\t\t[1] Best Selling Categories Sorted by QYT\n\n\t\t\t[2] Best Selling Categories Sorted by Amount");
+		System.out.print("\n\n\tEnter Option : ");
+		int option = input.nextInt();
+
+		switch (option) {
+			//case 1: bestSellingCatSortedByQyt();
+			//	break;
+			//case 2: bestSellingCatSortedByAmount();
+			//	break;
+			default:
+				System.out.println("\n\n\t\t\t\t\tInvalid Input...");
+				System.out.print("\n\n\tDo you want to enter option again ? (y/n) : ");
+				String ynOption = input.next().toLowerCase();
+				
+				if(ynOption.equals("y")){
+					itemReports();
+				}else if(ynOption.equals("n")){
+					System.out.println("\n\n\t\tRediceting to Reports Page..!");
+					sleep(2000);
+					viewReport();
+				}else{
+					System.out.println("\n\n\t\tInvalid Input..! Redirecting to Reports Page.. ");
+					sleep(2000);
+					viewReport();
+				}
+				break;
+		}
+	}
 }
